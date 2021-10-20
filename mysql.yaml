@@ -51,8 +51,9 @@ spec:
           - --server-id=1126369102
           - --gtid-mode=ON
           - --enforce-gtid-consistency=ON
+          - --max-connections=10000
       - name: vttablet
-        image: serhatcetinkaya/vitess:60322344f-lite
+        image: vitess/lite:v12.0.0-rc1
         imagePullPolicy: IfNotPresent
         command:
           - /vt/bin/vttablet

@@ -83,7 +83,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: status.hostIP
-        image: serhatcetinkaya/vitess:60322344f-lite
+        image: vitess/lite:v12.0.0-rc1
         imagePullPolicy: IfNotPresent
         name: vtctld
         ports:
