@@ -8,7 +8,7 @@ After cloning this repo, create a minikube cluster and a namespace:
 
 ```bash
 minikube start
-kubectl create ns cloud
+kubectl create ns vitess
 ```
 
 Deployment:
@@ -16,14 +16,14 @@ Deployment:
 - Apply `consul.yaml` file, it will create a consul client pod and 3 server nodes in cluster. Once it is ready you can get URL for consul UI from minikube
 ```
 kubectl apply -f consul.yaml
-minikube service consul-ui -n cloud
+minikube service consul-ui -n vitess
 
 |-----------|-----------|-------------|---------------------------|
 🏃  Starting tunnel for service consul-ui.
 |-----------|-----------|-------------|------------------------|
 | NAMESPACE |   NAME    | TARGET PORT |          URL           |
 |-----------|-----------|-------------|------------------------|
-| cloud     | consul-ui |             | http://127.0.0.1:59911 |
+| vitess     | consul-ui |             | http://127.0.0.1:59911 |
 |-----------|-----------|-------------|------------------------|
 ```
 
@@ -36,7 +36,7 @@ kubectl apply -f vtctld.yaml
 - Exec into vtctld container and run following commands:
 
 ```
-kubectl exec --namespace cloud --stdin --tty $VTCTLD_POD_NAME -- /bin/sh
+kubectl exec --namespace vitess --stdin --tty $VTCTLD_POD_NAME -- /bin/sh
 /vt/bin/vtctlclient -server localhost:15999 AddCellInfo -server_address localhost:8500 -root vitess/us_east_1 us_east_1
 ```
 
@@ -55,14 +55,14 @@ kubectl apply -f vtgate.yaml
 - Exec into vtctld container to init shard master:
 
 ```bash
-kubectl exec --namespace cloud --stdin --tty $VTCTLD_POD_NAME -- /bin/sh
-/vt/bin/vtctlclient -server localhost:15999 InitShardMaster -force peak-test/0 us_east_1-1126369102
+kubectl exec --namespace vitess --stdin --tty $VTCTLD_POD_NAME -- /bin/sh
+/vt/bin/vtctlclient -server localhost:15999 InitShardMaster -force vitess-test/0 us_east_1-1126369102
 ```
 
 At this step after making sure every pod is up and running we port-forward `:3306` from vtgate pod to our local and test connection:
 
 ```bash
-kubectl port-forward pod/$VTGATE_POD_NAME 3306:3306 -n cloud
+kubectl port-forward pod/$VTGATE_POD_NAME 3306:3306 -n vitess
 Forwarding from 127.0.0.1:3306 -> 3306
 Forwarding from [::1]:3306 -> 3306
 ```

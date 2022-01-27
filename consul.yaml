@@ -5,7 +5,7 @@ metadata:
     app: consul-client
     service_group: consul
   name: consul-client
-  namespace: cloud
+  namespace: vitess
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -14,7 +14,7 @@ metadata:
     app: consul-server
     service_group: consul
   name: consul-server
-  namespace: cloud
+  namespace: vitess
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
@@ -23,7 +23,7 @@ metadata:
     app: consul-client
     service_group: consul
   name: consul-client
-  namespace: cloud
+  namespace: vitess
 rules: []
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -33,7 +33,7 @@ metadata:
     app: consul-server
     service_group: consul
   name: consul-server
-  namespace: cloud
+  namespace: vitess
 rules: []
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -43,7 +43,7 @@ metadata:
     app: consul-client
     service_group: consul
   name: consul-client
-  namespace: cloud
+  namespace: vitess
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -51,7 +51,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: consul-client
-  namespace: cloud
+  namespace: vitess
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -60,7 +60,7 @@ metadata:
     app: consul-server
     service_group: consul
   name: consul-server
-  namespace: cloud
+  namespace: vitess
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -68,7 +68,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: consul-server
-  namespace: cloud
+  namespace: vitess
 ---
 apiVersion: v1
 data:
@@ -100,7 +100,7 @@ metadata:
     app: consul-client
     service_group: consul
   name: consul-client-config-tmpl
-  namespace: cloud
+  namespace: vitess
 ---
 apiVersion: v1
 data:
@@ -136,7 +136,7 @@ metadata:
     app: consul-server
     service_group: consul
   name: consul-server-config-tmpl
-  namespace: cloud
+  namespace: vitess
 ---
 apiVersion: v1
 kind: Service
@@ -147,7 +147,7 @@ metadata:
     app: consul-server
     service_group: consul
   name: consul-server
-  namespace: cloud
+  namespace: vitess
 spec:
   clusterIP: None
   ports:
@@ -192,7 +192,7 @@ metadata:
     app: consul-ui
     service_group: consul
   name: consul-ui
-  namespace: cloud
+  namespace: vitess
 spec:
   type: NodePort
   ports:
@@ -211,7 +211,7 @@ metadata:
     app: consul-client
     service_group: consul
   name: consul-client
-  namespace: cloud
+  namespace: vitess
 spec:
   clusterIP: None
   ports:
@@ -256,7 +256,7 @@ metadata:
     app: consul-server
     service_group: consul
   name: consul-server
-  namespace: cloud
+  namespace: vitess
 spec:
   podManagementPolicy: Parallel
   replicas: 3
@@ -393,7 +393,7 @@ metadata:
     app: consul-server
     service_group: consul
   name: consul-server
-  namespace: cloud
+  namespace: vitess
 spec:
   minAvailable: 2
   selector:
@@ -407,7 +407,7 @@ metadata:
     app: consul-client
     service_group: consul
   name: consul-client
-  namespace: cloud
+  namespace: vitess
 spec:
   serviceName: consul-client
   selector:
@@ -527,7 +527,7 @@ data:
 kind: Secret
 metadata:
   name: consul-client
-  namespace: cloud
+  namespace: vitess
 type: Opaque
 ---
 apiVersion: v1
@@ -537,5 +537,5 @@ data:
 kind: Secret
 metadata:
   name: consul-server
-  namespace: cloud
+  namespace: vitess
 type: Opaque

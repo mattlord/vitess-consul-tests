@@ -4,7 +4,7 @@ metadata:
   labels:
     app: vtgate
   name: vtgate
-  namespace: cloud
+  namespace: vitess
 spec:
   ports:
   - name: vtgate
@@ -20,13 +20,13 @@ data:
 kind: ConfigMap
 metadata:
   name: vtgate-auth
-  namespace: cloud
+  namespace: vitess
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: vtgate
-  namespace: cloud
+  namespace: vitess
 spec:
   replicas: 1
   revisionHistoryLimit: 2
@@ -67,7 +67,7 @@ spec:
         - MASTER
         - -grpc_max_message_size
         - "37754432"
-        image: vitess/lite:v12.0.0-rc1
+        image: mattalord/vitess_local:latest
         imagePullPolicy: IfNotPresent
         name: vtgate
         ports:
