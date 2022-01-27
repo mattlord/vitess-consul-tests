@@ -61,8 +61,8 @@ At this step after making sure every pod is up and running we port-forward `:330
 
 ```bash
 kubectl port-forward pod/$VTGATE_POD_NAME 33306:3306 -n vitess
-Forwarding from 127.0.0.1:3306 -> 3306
-Forwarding from [::1]:3306 -> 3306
+Forwarding from 127.0.0.1:33306 -> 3306
+Forwarding from [::1]:33306 -> 3306
 ```
 
 ```bash
