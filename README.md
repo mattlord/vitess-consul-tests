@@ -1,8 +1,6 @@
-# vitess-consul-poc
+# vitess-consul-tests
 
-This repo has resources to create a proof of concept showing that when Consul leader node is unreachable, Vitess pauses serving to clients
-
-Resources are intended to be used in kubernetes, tests are done using minikube:
+This repo has resources to create a Vitess cluster using Consul for the topology server for testing purposes.
 
 After cloning this repo, create a minikube cluster and a namespace:
 
@@ -56,19 +54,19 @@ kubectl apply -f vtgate.yaml
 
 ```bash
 kubectl exec --namespace vitess --stdin --tty $VTCTLD_POD_NAME -- /bin/sh
-/vt/bin/vtctlclient -server localhost:15999 InitShardMaster -force vitess-test/0 us_east_1-1126369102
+/vt/bin/vtctlclient -server localhost:15999 InitShardPrimary -force vitess-test/0 us_east_1-1126369102
 ```
 
 At this step after making sure every pod is up and running we port-forward `:3306` from vtgate pod to our local and test connection:
 
 ```bash
-kubectl port-forward pod/$VTGATE_POD_NAME 3306:3306 -n vitess
+kubectl port-forward pod/$VTGATE_POD_NAME 33306:3306 -n vitess
 Forwarding from 127.0.0.1:3306 -> 3306
 Forwarding from [::1]:3306 -> 3306
 ```
 
 ```bash
-➜  ~ mysql -h127.0.0.1 -uroot -ppassw0rd
+➜  ~ mysql -h127.0.0.1 -uroot -ppassw0rd -P33306
 mysql: [Warning] Using a password on the command line interface can be insecure.
 Welcome to the MySQL monitor.  Commands end with ; or \g.
 Your MySQL connection id is 2
