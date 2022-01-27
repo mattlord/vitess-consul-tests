@@ -82,9 +82,3 @@ Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
 mysql>
 ```
-
-Now the setup is complete , you should set replica count of consul-server statefullset to 0 , while test below is running
-
-```bash
-bash test.sh
-```
